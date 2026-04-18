@@ -37,3 +37,15 @@ def create_user(nombre, apellido, email, descripcion, curso, anio, direccion, cp
     cursor.close()
     conn.close()
     return {"mensaje": "Usuario creado correctamente"}
+
+def obtain_user(email):
+    conn = database.connection_db()
+    cursor = conn.cursor()
+    sql_view = "SELECT id, nombre, apellido, email, curso, anio, direccion FROM users WHERE email = %s"
+    cursor.execute(sql_view, (email,))
+    resultado = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    if resultado is None:
+        return {"error": "Usuario no encontrado"}
+    return resultado
