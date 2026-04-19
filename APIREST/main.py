@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Form
-from services.user import create_user, create_table, obtain_user
+from services.user import create_user, create_table, obtain_user, update_user
 
 app = FastAPI()
 
@@ -23,4 +23,13 @@ async def register(
 @app.get("/formulario/perfil/{email}")
 async def obtener(email: str):
     result = obtain_user(email)
+    return result
+
+@app.put("/formulario/perfil/{email}", response_model=dict)
+async def modificar(
+        id: str,
+        apellido: str = Form(...),
+        direccion: str = Form(...),
+):
+    result = update_user(id, apellido, direccion)
     return result

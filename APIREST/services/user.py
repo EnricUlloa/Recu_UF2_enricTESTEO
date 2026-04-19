@@ -50,3 +50,13 @@ def obtain_user(email):
     if resultado is None:
         return {"error": "Usuario no encontrado"}
     return user_schema(resultado)
+
+def update_user(id, apellido, direccion):
+    conn = database.connection_db()
+    cursor = conn.cursor()
+    sql_update = '''UPDATE users SET apellido = %s, direccion = %s WHERE id = %s'''
+    cursor.execute(sql_update, (apellido, direccion, id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return {"mensaje": "Usuario actualizado correctamente"}
