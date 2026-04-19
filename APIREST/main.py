@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Form
-from services.user import create_user, create_table, obtain_user, update_user
+from services.user import create_user, create_table, obtain_user, update_user, delete_user
 
 app = FastAPI()
 
@@ -32,4 +32,9 @@ async def modificar(
         direccion: str = Form(...),
 ):
     result = update_user(id, apellido, direccion)
+    return result
+
+@app.delete("/formulario/perfil/{email}", response_model=dict)
+async def eliminar(id: str):
+    result = delete_user(id)
     return result
