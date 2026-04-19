@@ -1,4 +1,5 @@
 from config import database
+from schema.users_sch import user_schema
 
 #conn = database.connection_db()
 
@@ -48,4 +49,4 @@ def obtain_user(email):
     conn.close()
     if resultado is None:
         return {"error": "Usuario no encontrado"}
-    return resultado
+    return user_schema(resultado)
